@@ -1,0 +1,26 @@
+<div class="">
+    <div class="contacts row contacts_row">
+	    <div class="card__body">
+	        <div class="table-responsive">
+	            <table id="data-table" class="table">
+	                <thead>
+	                    <tr>
+	                        <th data-column-id="id" data-identifier="true" data-visible="false"></th>
+	                        <th data-column-id="payment_date" data-header-css-class="col-md-4" data-formatter="dateInvoice">Payment Date</th> <!--		data-formatter="dateInvoice"	-->
+	                        <th data-column-id="invoice_id" data-header-css-class="col-md-4">Invoice ID</th>
+	                        <th data-column-id="id" data-header-css-class="col-md-2" data-formatter="downloadLink"></th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                    <tr ng-repeat="item in receipts">
+	                        <td ng-bind="item.id"></td>
+	                        <td ng-bind="item.date"></td>
+	                        <td ng-bind="item.id"></td>
+	                        <td ng-bind="item.invoice_pdf"></td>
+	                    </tr>
+	                </tbody>
+	            </table>
+	        </div>
+	    </div>
+	</div>
+</div>

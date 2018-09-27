@@ -1,0 +1,98 @@
+<div class="" ng-controller="settingsCtrl">
+    <div class="row row-margin-0" style="margin-bottom: 10px;">
+        <div class="card__body">
+            <div class="table-responsive" style="padding: 0px;">
+                <table id="data-table-2" class="table settings-table">
+                    <tr>
+                        <td width="50%" class="text-right" style="margin-right:20px;">Automatically withdraw connection requests</td>
+                        <td>:</td>
+                        <td width="50%">
+                            <input type="checkbox" class="js-switch js-auto-change" ng-checked="settings.autoWithdraw" />
+                            <select ng-if="settings.autoWithdraw != false" id="autoWithdraw" style="height: 30px;margin-left:20px;vertical-align: middle;" ng-model="settings.autoWithdraw">
+                                <option value="30">30 days</option>
+                                <option value="60">60 days</option>
+                                <option value="90">90 days</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="">
+    <div class="contacts row contacts_row">
+    <div class="card__body">
+        <div class="table-responsive">
+            <table id="data-table" class="table">
+                <thead>
+                    <tr>
+                        <th data-column-id="id" data-visible="false"></th>
+                        <th data-column-id="profile_id" data-identifier="true" data-visible="false"></th>
+                        <th data-column-id="url" data-identifier="true" data-visible="false"></th>
+                        <th data-column-id="name" data-header-css-class="col-md-2" data-formatter="nameWithLink">Name</th>
+                        <th data-column-id="invitation_message" data-header-css-class="col-md-2" data-formatter="invMessage">Connection Invitation</th>
+                        <th data-column-id="follow_up_message" data-header-css-class="col-md-2" data-formatter="folMessage">Follow Up Message</th>
+                        <th data-column-id="date_conn_sent" data-header-css-class="col-sm-2" data-formatter="date" data-order="desc">Date invitation sent</th>
+                        <th data-column-id="tags" data-formatter="tag" data-header-css-class="col-md-2">Tags</th>
+                        <th data-column-id="delete" data-sortable="false" data-header-css-class="col-xs-1" data-formatter="withdrawButton"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="inv in invites" ng-if="inv.is_accepted == 'false'">
+                        <td ng-bind="inv.id"></td>
+                        <td ng-bind="inv.c_public_id"></td>
+                        <td ng-bind="inv.c_profile_url"></td>
+                        <td ng-bind="inv.c_name"></td>
+                        <td ng-bind="inv.invitation_message"></td>
+                        <td ng-bind="inv.follow_up_message"></td>
+                        <td ng-bind="inv.date_conn_sent"></td>
+                        <td ng-bind="inv.tags"></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="edit--tag" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Tags</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select id="tag_select" class="select2" multiple data-placeholder="Select tag" ng-model="tag" ng-options="o for o in tags track by o"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn leo-btn leo-btn-success" ng-if="!editMode" ng-click="saveTags();">SAVE</button>
+                <button class="btn leo-btn leo-btn-success btn--icon preloader-icon" ng-if="editMode"><i class="zmdi zmdi-refresh"></i></button>
+                <button type="button" class="btn leo-btn leo-btn-danger" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="edit-multiple--tag" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Tags to Selected Connections</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select id="tag_select_multiple" class="select2" multiple data-placeholder="Select tag" ng-model="tag" ng-options="o for o in tags track by o"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn leo-btn leo-btn-success" ng-if="!editMode" ng-click="addTagsToSelected();">SAVE</button>
+                <button class="btn leo-btn leo-btn-success btn--icon preloader-icon" ng-if="editMode"><i class="zmdi zmdi-refresh"></i></button>
+                <button type="button" class="btn leo-btn leo-btn-danger" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>

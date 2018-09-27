@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package 
+	xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+	xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+	xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+	IgnorableNamespaces="uap3">
+	<Identity 
+		Name="MeetLeonard.MeetLeonard" 
+		Publisher="CN=F9D77A3C-D184-46EA-8027-51104EE1CDFE" 
+		Version="4.0.7.0" /> <!-- UPDATE IDENTITY -->
+
+	<Properties> 
+		<DisplayName>Meet Leonard</DisplayName> 
+		<PublisherDisplayName>Meet Leonard</PublisherDisplayName> <!-- UPDATE PUBLISHER DISPLAY NAME -->
+		<Logo>Assets\StoreLogo.png</Logo> 
+	</Properties> 
+
+	<Dependencies> 
+		<TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.15063.0" MaxVersionTested="10.0.15063.0" />
+	</Dependencies> 
+
+	<Resources>
+		<Resource Language="en-us" />
+		<Resource uap:Scale="200"/>
+	</Resources> 
+
+	<Applications> 
+		<Application Id="App">
+			<uap:VisualElements
+				AppListEntry="none"
+				DisplayName="Meet Leonard"
+				Square150x150Logo="Assets\Square150x150Logo.png"
+        		Square44x44Logo="Assets\Square44x44Logo.png"
+				Description="Save time in lead generation and business development with the Leonard automation bot"
+				BackgroundColor="transparent">
+			</uap:VisualElements>
+			<Extensions>
+				<uap3:Extension Category="windows.appExtension">
+					<uap3:AppExtension
+						Name="MeetLeonard.MeetLeonard"
+						Id="EdgeExtension"
+						PublicFolder="Extension"
+						DisplayName="Meet Leonard">
+						<uap3:Properties>
+							<Capabilities>
+								<Capability Name="websiteInfo"/>
+								<Capability Name="browserStorage"/>
+								<Capability Name="browserWebRequest"/>
+								<Capability Name="websiteContent"/>
+							</Capabilities>
+						</uap3:Properties>
+					</uap3:AppExtension>
+				</uap3:Extension>
+			</Extensions>
+		</Application> 
+	</Applications>
+</Package>

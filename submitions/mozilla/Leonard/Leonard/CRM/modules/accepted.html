@@ -1,0 +1,126 @@
+<div class="">
+    <div class="contacts row contacts_row">
+    <div class="card__body">
+        <div class="table-responsive">
+            <table id="data-table" class="table">
+                <thead>
+                    <tr>
+                        <th data-column-id="id" data-visible="false"></th>
+                        <th data-column-id="attachments" data-formatter="hasAttachment" data-header-css-class="col-xs-1 leo_width_1"></th>
+                        <th data-column-id="profile_id" data-identifier="true" data-visible="false"></th>
+                        <th data-column-id="url" data-identifier="true" data-visible="false"></th>
+                        <th data-column-id="name" data-header-css-class="col-md-2" data-formatter="nameWithLink">Name</th>
+                        <th data-column-id="follow_up_message" data-header-css-class="col-md-3" data-formatter="folMessage">Follow Up Message</th>
+                        <th data-column-id="tags" data-formatter="tag" data-header-css-class="col-xs-1">Tags</th>
+                        <th data-column-id="view" data-sortable="false" data-header-css-class="col-xs-1" data-formatter="viewButton"></th>
+                        <th data-column-id="edit" data-sortable="false" data-header-css-class="col-xs-1" data-formatter="editButton"></th>
+                        <th data-column-id="delete" data-sortable="false" data-header-css-class="col-xs-1" data-formatter="deleteButton"></th>
+                        <th data-column-id="send" data-sortable="false" data-header-css-class="col-xs-1" data-formatter="sendButton"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="inv in invites" ng-if="inv.is_accepted == 'true'">
+                        <td ng-bind="inv.id"></td>
+                        <td ng-bind="inv.attachments"></td>
+                        <td ng-bind="inv.c_public_id"></td>
+                        <td ng-bind="inv.c_profile_url"></td>
+                        <td ng-bind="inv.c_name"></td>
+                        <td ng-bind="inv.follow_up_message"></td>
+                        <td ng-bind="inv.tags"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal--default" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Follow up Message</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <textarea class="form-control" ng-trim="false" ng-model="message" rows="8" maxlength="2000" placeholder="Enter template message" spellcheck="false"></textarea>
+                    <i class="form-group__bar"></i>
+                </div>
+                <div>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%firstName%');">%firstName%</button>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%lastName%');">%lastName%</button>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%position%');">%position%</button>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%company%');">%company%</button>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%industry%');">%industry%</button>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%city%');">%city%</button>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%state%');">%state%</button>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%country%');">%country%</button>
+                    <span class="align-right">{{message.length||0}}/2000</span>
+                </div>
+            </div>
+            <div class="form-group uploaded_file_list">
+                <ul class="scrollable_div" style="padding: 0 10px">
+                    <li ng-repeat="file in uploaded_files" class="file-block">
+                        <div class="file_details_cont">
+                            <span class="file_name">{{file.name}}</span>
+                            <span class="file_size"> ({{(file.size) | bytes}})</span>
+                            <span class="material-icons remove_uploaded_file" ng-click="removeFile($index);">delete</span>
+                            <div hidden>{{file.LinkedInResource}}</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <span class="attach-icon" ng-click="uploadFile()" ng-disabled="file_upload == 'file_upload'">
+                    <i class="material-icons" ng-if="file_upload == 'attachment'">file_upload</i>
+                    <div ng-if="file_upload == 'file_upload'" class="preloader preloader--xs preloader--dark"><svg viewBox="25 25 50 50"><circle cx="50" cy="50" r="20"></circle></svg></div>
+                </span>
+                <button type="button" class="btn leo-btn leo-btn-success" ng-disabled="title=='' || message==''" ng-if="!edit" ng-click="saveTemplate()" data-dismiss="modal">SAVE</button>
+                <button type="button" class="btn leo-btn leo-btn-success" ng-disabled="title=='' || message==''" ng-if="edit" ng-click="updateTemplate()" data-dismiss="modal">UPDATE</button>
+                <button type="button" class="btn leo-btn leo-btn-danger" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="edit--tag" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Tags</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select id="tag_select" class="select2" multiple data-placeholder="Select tag" ng-model="tag" ng-options="o for o in tags track by o"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn leo-btn leo-btn-success" ng-if="!editMode" ng-click="saveTags();">SAVE</button>
+                <button class="btn leo-btn leo-btn-success btn--icon preloader-icon" ng-if="editMode"><i class="zmdi zmdi-refresh"></i></button>
+                <button type="button" class="btn leo-btn leo-btn-danger" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="edit-multiple--tag" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Tags to Selected Connections</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select id="tag_select_multiple" class="select2" multiple data-placeholder="Select tag" ng-model="tag" ng-options="o for o in tags track by o"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn leo-btn leo-btn-success" ng-if="!editMode" ng-click="addTagsToSelected();">SAVE</button>
+                <button class="btn leo-btn leo-btn-success btn--icon preloader-icon" ng-if="editMode"><i class="zmdi zmdi-refresh"></i></button>
+                <button type="button" class="btn leo-btn leo-btn-danger" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+[0904/111754:ERROR:tcp_listen_socket.cc(76)] Could not bind socket to 127.0.0.1:6004
+[0904/111754:ERROR:node_debugger.cc(86)] Cannot start debugger server
+[0905/102601:ERROR:tcp_listen_socket.cc(76)] Could not bind socket to 127.0.0.1:6004
+[0905/102601:ERROR:node_debugger.cc(86)] Cannot start debugger server
+[0906/104225:ERROR:tcp_listen_socket.cc(76)] Could not bind socket to 127.0.0.1:6004
+[0906/104225:ERROR:node_debugger.cc(86)] Cannot start debugger server
+[0907/102959:ERROR:tcp_listen_socket.cc(76)] Could not bind socket to 127.0.0.1:6004
+[0907/102959:ERROR:node_debugger.cc(86)] Cannot start debugger server
+[0911/123108:ERROR:tcp_listen_socket.cc(76)] Could not bind socket to 127.0.0.1:6004
+[0911/123108:ERROR:node_debugger.cc(86)] Cannot start debugger server
+[0911/173543:ERROR:tcp_listen_socket.cc(76)] Could not bind socket to 127.0.0.1:6004
+[0911/173543:ERROR:node_debugger.cc(86)] Cannot start debugger server
+[0912/182450:ERROR:tcp_listen_socket.cc(76)] Could not bind socket to 127.0.0.1:6004
+[0912/182450:ERROR:node_debugger.cc(86)] Cannot start debugger server

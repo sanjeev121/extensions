@@ -1,0 +1,76 @@
+In content Script
+
+For drop down in Message and Content
+7123,24 && 7177,78 && 7201,03
+
+$('#selMes').html('<option value="">'+local_strings['SELECT_MSG_TXT']+'</option>'); // old code
+$('#selMes').html('<option value="">'+(local_strings['SELECT_MSG_TXT'] == undefined ?'Select Message':local_strings['SELECT_MSG_TXT'])+'</option>'); // updated code.
+
+*********** NOTES *********
+
+No. Internet Explorer / Edge browsers do not have the same JavaScript-based extension architecture.
+Add-ons for IE are like modules of the program itself,and built using those native languages.
+
+
+
+https://partner.microsoft.com/en-us/dashboard/products/9NT60WM1GKMG/identity
+
+
+Run this command in the new path where you want to create the files.Do not run this command inside your developed extension folder.
+
+manifoldjs -l debug -p edgeextension -f edgeextension -m D:\Leonard_submit\manifest.json
+
+
+manifoldjs -l debug -p edgeextension package D:debugs\MeetLeonard\edgeextension\manifest\
+
+makeappx.exe pack /h SHA256 /d "D:\debugs\MeetLeonard\edgeextension\manifest" /p D:\pa\MeetLeonard.appx
+
+// makeappx.exe pack /h SHA256 /d "C:\Extension\My Extension" /p C:\Extension\MyExtension.appx
+
+Important Links:
+
+https://docs.microsoft.com/en-us/microsoft-edge/extensions/guides/packaging
+https://developer.microsoft.com/en-us/windows/develop/app-certification-kit
+
+Manually packaging::
+
+https://docs.microsoft.com/en-us/microsoft-edge/extensions/guides/packaging/creating-and-testing-extension-packages
+
+
+Signing extension for testing 
+
+https://docs.microsoft.com/en-us/microsoft-edge/extensions/guides/packaging/creating-and-testing-extension-packages#testing-an-appx-package
+
+
+
+
+C:\Program Files (x86)\Windows Kits\10\bin\10.0.16299.0\x64>
+
+makeappx.exe pack /h SHA256 /d "D:\debugs\MeetLeonard\edgeextension\manifest" /p D:\pa\MeetLeonard.appx
+
+
+<--- Last few GCs --->
+
+[1520:000002162EE68B00]   396450 ms: Mark-sweep 1418.8 (1463.2) -> 1418.8 (1463.2) MB, 138.5 / 0.0 ms  allocation failure scavenge might not succeed
+[1520:000002162EE68B00]   396591 ms: Mark-sweep 1418.8 (1463.2) -> 1418.8 (1447.2) MB, 140.2 / 0.0 ms  last resort GC in old space requested
+[1520:000002162EE68B00]   396734 ms: Mark-sweep 1418.8 (1447.2) -> 1418.8 (1447.2) MB, 142.8 / 0.0 ms  last resort GC in old space requested
+
+
+<--- JS stacktrace --->
+
+==== JS stack trace =========================================
+
+Security context: 000003A2D8025EE1 <JSObject>
+    2: replace(this=000003C4E1BFFC01 <Very long string[15989]>,000003C4E1BFFC29 <JSRegExp <String[7]: [\\\/]+>>,0000022CBF13DD21 <String[1]: />)
+    3: sanitizePath [C:\Users\isteam\AppData\Roaming\npm\node_modules\manifoldjs\node_modules\archiver-utils\index.js:~98] [pc=000003D370D3D089](this=000000B5F8CD2891 <Object map = 000003C51514B581>,filepath=000003C4E1BFFC01 <Very long string[15989]>)...
+
+FATAL ERROR: CALL_AND_RETRY_LAST Allocation failed - JavaScript heap out of memory
+ 1: node_module_register
+ 2: v8::internal::FatalProcessOutOfMemory
+ 3: v8::internal::FatalProcessOutOfMemory
+ 4: v8::internal::Factory::NewFixedArrayWithHoles
+ 5: v8::internal::ParserBase<v8::internal::Parser>::MarkLoopVariableAsAssigned
+ 6: v8::internal::ParserBase<v8::internal::Parser>::MarkLoopVariableAsAssigned
+ 7: v8::internal::ParserBase<v8::internal::Parser>::MarkLoopVariableAsAssigned
+ 8: v8::internal::ParserBase<v8::internal::Parser>::MarkLoopVariableAsAssigned
+ 9: 000003D370B847A1

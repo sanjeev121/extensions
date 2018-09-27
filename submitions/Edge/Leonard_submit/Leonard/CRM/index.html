@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Leonard CRM</title>
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+        <link rel="stylesheet" href="vendors/Poppins/Poppins.css" />
+        <link rel="stylesheet" href="vendors/material-design-icons/css/materialdesignicons.min.css" />
+        <!-- Vendors -->
+        <!-- Animate CSS -->
+        <link href="vendors/animate.css/animate.min.css" rel="stylesheet" />
+        <!-- Material Design Icons -->
+        <link href="vendors/material-design-iconic-font/material-design-iconic-font.min.css" rel="stylesheet" />
+        <!-- Material Icons -->
+        <link href="vendors/Material Icons/material-icons.css" rel="stylesheet" />
+        <!-- Malihu Scrollbar -->
+        <link href="vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
+        <!-- Bootgrid -->
+        <link href="vendors/jquery.bootgrid/jquery.bootgrid.min.css" rel="stylesheet" />
+        <!-- Sweetalert -->
+        <link href="vendors/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+        <!-- Select 2 -->
+        <link href="vendors/select2/select2.min.css" rel="stylesheet" />
+        <!-- Switchery -->
+        <link href="vendors/switchery/switchery.min.css" rel="stylesheet" />
+        <!-- Site CSS -->
+        <link href="lib/css/app.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="lib/css/crm.css" />
+    </head>
+    <body ng-controller='mainCtrl'>
+        <!-- Page Loader -->
+        <div id="page-loader">
+            <div class="preloader preloader--xl preloader--light">
+                <svg viewBox="25 25 50 50">
+                    <circle cx="50" cy="50" r="20" />
+                </svg>
+            </div>
+            <div id="leo_hint"><span></span> <i>-- Leonard</i></div>
+        </div>
+        <div id="cancelledBar">
+            <div class="leo_container upgrade_container" hidden>
+                <div class="cancelled_cont">
+                    <div>
+                        <span style="vertical-align: middle;">Your plan is expired.</span>
+                        <button class="upgradeBtn">Upgrade</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="ajax-loader">
+            <div class="preloader preloader--xl preloader--light">
+                <svg viewBox="25 25 50 50">
+                    <circle cx="50" cy="50" r="20" />
+                </svg>
+            </div>
+        </div>
+        <header id="header" class="flex">
+            <div class="logo-container flex">
+                <div class="logo flex">
+                    <a href="#/" class="hidden-xs">
+                    <img src="./lib/images/leonard-logo-174x60.png" width="120"/>
+                    <span>CRM</span>
+                    </a>
+                </div>
+            </div>
+            <div class="logo-container-mini flex hidden" style="width:70px;">
+                <div class="logo flex">
+                    <a href="#/" class="hidden-xs">
+                    <img src="./lib/images/logo.png" width="40"/>
+                    </a>
+                </div>
+            </div>
+            <div id="collapse_menu" class="collapse_menu">
+                <i class="mdi mdi-menu"></i>
+            </div>
+            <div style="width: 100%;margin-top: 5px;text-align: right;margin-right: 10px;"><span class="plan_details"></span><a class="upgrade_btn" style="font-size:15px;padding:10px;color:white;cursor:pointer;">Switch Plans</a></div>
+            <ul hidden class="top-menu">
+                <li class="top-menu__profile">
+                    <a href="https://chrome.google.com/webstore/detail/meet-leonard-free-linkedi/feoiiijdmfoabkkgfnfhfhhghhlmjbmb/reviews" target="_blank">Share the <span class="mdi mdi-heart"></span></a>
+                    <a href="http://help.meetleonard.com" target="_blank"><img src="../images/question-mark.png" alt="Profile picture"  width="35" height="35" /></a>
+                </li>
+            </ul>
+        </header>
+        <section id="main">
+            <aside id="navigation" class="navigation-expand show">
+                <div class="navigation__header">
+                    <i class="zmdi zmdi-long-arrow-left" data-mae-action="block-close"></i>
+                </div>
+                <div class="navigation__menu c-overflow mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar" style="position: relative; overflow: visible;">
+                <div id="mCSB_1" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0">
+                <div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr">
+                    <ul style="margin-top: 20px;">
+                        <!-- <li ng-class="active_page=='dashboard' ? 'navigation__active' : '' "><a href="#"><i class="mdi mdi-view-dashboard"></i> Dashboard</a></li> -->
+                        <li class="navigation__sub" ng-class="(active_page=='billing' || active_page=='receipts' || active_page=='details' || active_page=='redeem' || active_page=='cancel' || active_page=='profile_manager') ? 'navigation__sub--toggled navigation__active' : ''">
+                            <a href="" data-mae-action="submenu-toggle"><i style="top: -8px;left: 29px;"><img ng-src="{{user_details.profile_img}}" width="30" style="border-radius:50%"/></i> Account </a>
+                            <ul ng-style="(active_page=='billing' || active_page=='receipts' || active_page=='details' || active_page=='redeem' || active_page=='cancel' || active_page=='profile_manager') ? {'display':'block'} : {}">
+                                <li ng-class="active_page=='details' ? 'navigation-sub-active' : '' "><a href="#!/details">My Details</a></li>
+                                <li ng-class="active_page=='billing' ? 'navigation-sub-active' : '' "><a ng-href="https://meetleonard.com/upgrade/" target="_blank">Plans + Billing</a></li>
+                                <li ng-class="active_page=='update_cc' ? 'navigation-sub-active' : '' "><a ng-href="https://meetleonard.com/update_cc/" target="_blank">Update Card information</a></li>
+                                <li ng-if="user_details.user_type=='Enterprise' || user_details.user_type=='AppSumo Enterprise'" ng-class="active_page=='profile_manager' ? 'navigation-sub-active' : '' "><a href="#!/profile_manager">Profile Manager</a></li>
+                                <li ng-class="active_page=='receipts' ? 'navigation-sub-active' : '' "><a href="#!/receipts">Receipts</a></li>
+                                <li ng-class="active_page=='redeem' ? 'navigation-sub-active' : '' "><a href="#!/redeem">Redeem</a></li>
+                                <li ng-class="active_page=='cancel' ? 'navigation-sub-active' : '' "><a href="#!/cancel">Cancel</a></li>
+                            </ul>
+                        </li>
+                        <li ng-class="active_page=='connections' ? 'navigation__active' : '' "><a href="#"><i class="mdi mdi-account"></i> My Connections</a></li>
+                        <li class="navigation__sub" ng-class="(active_page=='accepted' || active_page=='responded' || active_page=='sent' || active_page == 'received') ? 'navigation__sub--toggled navigation__active' : ''">
+                            <a href="#/"><i class="mdi mdi-account-multiple-plus"></i> Connection Requests </a>
+                            <ul ng-style="(active_page=='accepted' || active_page=='responded' || active_page=='sent' || active_page=='received') ? {'display':'block'} : {}">
+                                <li ng-class="active_page=='accepted' ? 'navigation-sub-active' : '' "><a href="#!/accepted">Accepted</a></li>
+                                <li ng-class="active_page=='responded' ? 'navigation-sub-active' : '' "><a href="#!/responded">Responded</a></li>
+                                <li ng-class="active_page=='sent' ? 'navigation-sub-active' : '' "><a href="#!/sent">Sent</a></li>
+                                <li ng-class="active_page=='received' ? 'navigation-sub-active' : '' "><a href="#!/received">Received</a></li>
+                            </ul>
+                        </li>
+                        <li class="navigation__sub" ng-class="(active_page=='connection_invitation' || active_page=='follow_up_message' || active_page=='message' || active_page=='inmail' || active_page=='tag' || active_page=='notification') ? 'navigation__sub--toggled navigation__active' : ''">
+                            <a href="" data-mae-action="submenu-toggle"><i class="zmdi zmdi-code"></i> Templates </a>
+                            <ul ng-style="(active_page=='connection_invitation' || active_page=='follow_up_message' || active_page=='message' || active_page=='inmail' || active_page=='tag' || active_page=='notification') ? {'display':'block'} : {}">
+                                <li ng-class="active_page=='connection_invitation' ? 'navigation-sub-active' : '' "><a href="#!/connection_invitation">Connection Invitations</a></li>
+                                <li ng-class="active_page=='follow_up_message' ? 'navigation-sub-active' : '' "><a href="#!/follow_up_message">Follow Up Messages</a></li>
+                                <li ng-class="active_page=='message' ? 'navigation-sub-active' : '' "><a href="#!/message">Messages</a></li>
+                                <li ng-class="active_page=='inmail' ? 'navigation-sub-active' : '' "><a href="#!/inmail">InMails</a></li>
+                                <li ng-class="active_page=='tag' ? 'navigation-sub-active' : '' "><a href="#!/tag">Tags</a></li>
+                                <li ng-class="active_page=='notification' ? 'navigation-sub-active' : '' "><a href="#!/notification">Notification</a></li>
+                            </ul>
+                        </li>
+                        <li class="navigation__sub" ng-class="(active_page=='messages' || active_page=='inmails' || active_page=='connections_sent') ? 'navigation__sub--toggled navigation__active' : ''">
+                            <a href="#/"><i class="mdi mdi-history"></i> History </a>
+                            <ul ng-style="(active_page=='messages' || active_page=='inmails' || active_page=='connections_sent') ? {'display':'block'} : {}">
+                                <li ng-class="active_page=='messages' ? 'navigation-sub-active' : '' "><a href="#!/messages">Messages</a></li>
+                                <li ng-class="active_page=='inmails' ? 'navigation-sub-active' : '' "><a href="#!/inmails">InMails</a></li>
+                                <li ng-class="active_page=='connections_sent' ? 'navigation-sub-active' : '' "><a href="#!/connections_sent">Connections</a></li>
+                            </ul>
+                        </li>
+                        <li ng-class="active_page=='downloads' ? 'navigation__active' : '' "><a href="#!/downloads"><i class="mdi mdi-download"></i> Downloads</a></li>
+                        <li ng-class="active_page=='settings' ? 'navigation__active' : '' "><a href="#!/settings"><i class="mdi mdi-settings"></i> Settings </a></li>
+                        <!-- <li><a ng-href="http://tutorials.meetleonard.com/"  target="_blank"><i class="mdi mdi-video"></i> Tutorials </a></li> -->
+                        <li><a href="http://help.meetleonard.com" target="_blank"><i class="zmdi zmdi-help"></i> Help </a></li>
+                    </ul>
+                </div>
+            </aside>
+            <aside id="navigation_min" class="navigation-collapsed hidden" style="max-width: 70px;">
+                <div class="navigation__header">
+                    <i class="zmdi zmdi-long-arrow-left" data-mae-action="block-close"></i>
+                </div>
+                <div class="navigation-wrapper">
+                <div class="navigation-content navigation__menu c-overflow mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar" style="position: relative; overflow: visible;">
+                <div id="mCSB_1" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0">
+                    <div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr">
+                        <ul class="menu-list" style="margin-top: 20px;">
+                            <!-- <li ng-class="active_page=='dashboard' ? 'navigation__active' : '' ">
+                                <a href="#"><i class="mdi mdi-view-dashboard"></i> <span class="menu-title"> Dashboard </span></a>
+                            </li> -->
+                            <li class="navigation__sub" ng-class="(active_page=='billing' || active_page=='receipts' || active_page=='details' || active_page=='redeem' || active_page=='cancel'  || active_page=='profile_manager') ? 'navigation__sub--toggled navigation__active' : ''">
+                                <a href="" data-mae-action="submenu-toggle"><img ng-src="{{user_details.profile_img}}" width="30" style="border-radius:50%"/> <span class="menu-title"> Account </span></a>
+                                <ul class="hidden-menu">
+                                    <li ng-class="active_page=='details' ? 'navigation-sub-active' : '' "><a href="#!/details">My Details</a></li>
+                                    <li ng-class="active_page=='billing' ? 'navigation-sub-active' : '' "><a ng-href="https://meetleonard.com/upgrade/" target="_blank">Plans + Billing</a></li>
+                                    <li ng-class="active_page=='update_cc' ? 'navigation-sub-active' : '' "><a ng-href="https://meetleonard.com/upgrade/" target="_blank">Update Card information</a></li>
+                                    <li ng-if="user_details.user_type=='Enterprise' || user_details.user_type=='AppSumo Enterprise'" ng-class="active_page=='profile_manager' ? 'navigation-sub-active' : '' "><a href="#profile_manager">Profile Manager</a></li>
+                                    <!-- <li ng-class="active_page=='receipts' ? 'navigation-sub-active' : '' "><a href="#receipts">Receipts</a></li> -->
+                                    <li ng-class="active_page=='redeem' ? 'navigation-sub-active' : '' "><a href="#!/redeem">Redeem</a></li>
+                                    <li ng-class="active_page=='cancel' ? 'navigation-sub-active' : '' "><a href="#!/cancel">Cancel</a></li>
+                                </ul>
+                            </li>
+                            <li ng-class="active_page=='connections' ? 'navigation__active' : '' ">
+                                <a href="#connections"><i class="mdi mdi-account"></i> <span class="menu-title"> My Connections </span></a>
+                            </li>
+                            <li class="navigation__sub" ng-class="(active_page=='accepted' || active_page=='responded' || active_page=='sent' || active_page == 'received') ? 'navigation__sub--toggled navigation__active' : ''">
+                                <a href="">
+                                <i class="mdi mdi-account-multiple-plus"></i>
+                                <span class="menu-title"> Connection Requests </span>
+                                </a>
+                                <ul class="hidden-menu">
+                                    <li ng-class="active_page=='accepted' ? 'navigation-sub-active' : '' "><a href="#!/accepted">Accepted</a></li>
+                                    <li ng-class="active_page=='responded' ? 'navigation-sub-active' : '' "><a href="#!/responded">Responded</a></li>
+                                    <li ng-class="active_page=='sent' ? 'navigation-sub-active' : '' "><a href="#!/sent">Sent</a></li>
+                                    <li ng-class="active_page=='received' ? 'navigation-sub-active' : '' "><a href="#!/received">Received</a></li>
+                                </ul>
+                            </li>
+                            <li class="navigation__sub" ng-class="(active_page=='connection_invitation' || active_page=='follow_up_message' || active_page=='message' || active_page=='inmail' || active_page=='tag' || active_page=='notification') ? 'navigation__sub--toggled navigation__active' : ''">
+                                <a href="" data-mae-action="submenu-toggle"><i class="zmdi zmdi-code"></i> <span class="menu-title"> Templates </span></a>
+                                <ul class="hidden-menu">
+                                    <li ng-class="active_page=='connection_invitation' ? 'navigation-sub-active' : '' "><a href="#!/connection_invitation">Connection Invitations</a></li>
+                                    <li ng-class="active_page=='follow_up_message' ? 'navigation-sub-active' : '' "><a href="#!/follow_up_message">Follow Up Messages</a></li>
+                                    <li ng-class="active_page=='message' ? 'navigation-sub-active' : '' "><a href="#!/message">Messages</a></li>
+                                    <li ng-class="active_page=='inmail' ? 'navigation-sub-active' : '' "><a href="#!/inmail">InMails</a></li>
+                                    <li ng-class="active_page=='tag' ? 'navigation-sub-active' : '' "><a href="#!/tag">Tags</a></li>
+                                    <li ng-class="active_page=='notification' ? 'navigation-sub-active' : '' "><a href="#!/notification">Notification</a></li>
+                                </ul>
+                            </li>
+                            <li class="navigation__sub" ng-class="(active_page=='messages' || active_page=='inmails' || active_page=='connections_sent') ? 'navigation__sub--toggled navigation__active' : ''">
+                                <a href="">
+                                <i class="mdi mdi-history"></i>
+                                <span class="menu-title"> History </span>
+                                </a>
+                                <ul class="hidden-menu">
+                                    <li ng-class="active_page=='messages' ? 'navigation-sub-active' : '' "><a href="#!/messages">Messages</a></li>
+                                    <li ng-class="active_page=='inmails' ? 'navigation-sub-active' : '' "><a href="#!/inmails">InMails</a></li>
+                                    <li ng-class="active_page=='connections_sent' ? 'navigation-sub-active' : '' "><a href="#!/connections_sent">Connections</a></li>
+                                </ul>
+                            </li>
+                            <li ng-class="active_page=='downloads' ? 'navigation__active' : '' ">
+                                <a href="#!/downloads"><i class="mdi mdi-download"></i> <span class="menu-title"> Downloads </span></a>
+                            </li>
+                            <li ng-class="active_page=='settings' ? 'navigation__active' : '' ">
+                                <a href="#!/settings"><i class="mdi mdi-settings"></i> <span class="menu-title"> Settings </span></a>
+                            </li>
+                            <!-- <li><a ng-href="http://tutorials.meetleonard.com/" target="_blank"><i class="mdi mdi-video"></i>  <span class="menu-title">Tutorials</span> </a></li> -->
+                            <li><a href="http://help.meetleonard.com" target="_blank"><i class="zmdi zmdi-help"></i>  <span class="menu-title">Help</span> </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+            <section class="main-container">
+                <nav class="breadcrumb">
+                    <span ng-if="(active_page=='accepted' || active_page=='responded' || active_page=='pending')"> Connections </span>
+                    <span ng-if="(active_page=='connection_invitation' || active_page=='follow_up_message' || active_page=='message' || active_page=='inmail' || active_page=='tag' || active_page=='notification')"> Templates </span>
+                    <span>{{active_page | removeUnderscore}}</span>
+                </nav>
+                <section ng-view></section>
+            </section>
+            <!-- <footer id="footer">Copyright © 2018 Meet Leonard Pty Ltd</footer> -->
+        </section>
+        <!-- Javascript Libraries -->
+        <!-- jQuery -->
+        <script src="vendors/jquery/jquery.min.js"></script>
+        <!-- AngularJS -->
+        <script src="vendors/angular/angular.min.js"></script>
+        <script src="vendors/angular/angular-route.js"></script>
+        <!-- Bootstrap -->
+        <script src="../js/bootstrap.min.js"></script>
+        <!-- Malihu ScrollBar -->
+        <script src="vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+        <!-- Bootstrap Notify -->
+        <script src="vendors/remarkable-bootstrap-notify/bootstrap-notify.min.js"></script>
+        <!-- Demo Only -->
+        <script src="lib/js/misc.js"></script>
+        <!-- underscore -->
+        <script src="lib/js/underscore.js"></script>
+        <!-- Bootgrid -->
+        <script src="vendors/jquery.bootgrid/jquery.bootgrid.min.js"></script>
+        <!-- Select 2 -->
+        <script src="vendors/select2/select2.full.min.js"></script>
+        <!-- Sweetalert -->
+        <script src="vendors/sweetalert2/sweetalert2.min.js"></script>
+        <!-- Switchery -->
+        <script src="vendors/switchery/switchery.min.js"></script>
+        <!-- Timeago -->
+        <script src="vendors/timeago/timeago.min.js"></script>
+        <!--dir-paginate-->
+        <script src="vendors/dir-paginate/dir-paginate.js"></script>
+        <!--Chart JS-->
+        <script src="vendors/ChartJS/Chart.js"></script>
+        <!-- Site Functions & Actions -->
+        <script src="lib/js/app.min.js"></script>
+        <script src="lib/js/mainCtrl.js"></script>
+        <script src="lib/js/custom.js"></script>
+    </body>
+</html>

@@ -1,0 +1,492 @@
+<div class="">
+    <div class="contacts row contacts_row">
+        <div class="card__body leo-table-container">
+            <div class="leo-table-filters">
+                <span class="leo-search-container">
+                    <span class="table-bootgrid__icon zmdi mdi mdi-magnify"></span>
+                    <span class="leo-filter-tag-container">
+                        <span ng-repeat="(key , value) in filterCritera" class="leo-filter-tag">
+                            <span ng-if="key == 'occupation'">Headline</span>
+                            <span ng-if="key != 'occupation'">{{key}}</span>
+                            <span>: {{value}} </span>
+                            <span class="table-bootgrid__icon zmdi mdi mdi-close" ng-click="removeFilterTag(key)"></span>
+                        </span>
+                    </span>
+                    <span class="leo-filter-tag-container">
+                        <span ng-repeat="value in keywordCritera track by $index" class="leo-filter-tag">
+                            {{value}} 
+                            <span class="table-bootgrid__icon zmdi mdi mdi-close" ng-click="removeKeyword(value)"></span>
+                        </span>
+                    </span>
+                    <input class="leo-search-bar" type="text" ng-model="searchBy" placeholder="Search" ng-keyup="checkSearch($event)" ng-click="showFilterNotification()"/>
+
+                </span>
+
+                <select class="leo-select" ng-model="pageSize">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="256">250</option>
+                    <option value="500">500</option>
+                </select>
+                
+
+            </div>
+            <div class="leo-filterby-options" ng-if="searchBy && (slectedFilterOptions.length <5)">
+                        <div ng-click="setFilterByField('firstName')" ng-if="isFilterSelected('firstName')">
+                            by <span>First Name</span>
+                        </div>
+                        <div ng-click="setFilterByField('lastName')" ng-if="isFilterSelected('lastName')">
+                            by <span>Last Name</span>
+                        </div>
+                        <div ng-click="setFilterByField('occupation')" ng-if="isFilterSelected('occupation')">
+                            by <span>Headline</span>
+                        </div>
+                        <div ng-click="setFilterByField('tags')" ng-if="isFilterSelected('tags')">
+                            by <span>Tags</span>
+                        </div>
+                        <div ng-click="setFilterByField('alias')" ng-if="isFilterSelected('alias')">
+                            by <span>Alias</span>
+                        </div>
+                    </div>
+            <div class="leo-filter-contain">
+                
+            </div>
+
+            <div class="leo-table">
+                <table>
+                    <thead>
+                        <tr class="leo-table-header">
+                            <th class="leo-col-2 checkbox">
+                                <label>
+                                    <input type="checkbox" ng-click="selectAll()" ng-model="selectAllFlag"/>
+                                    <i class="input-helper"></i>
+                                </label>
+                                
+                            </th>
+                            <th class="leo-col-2"></th>
+                            <th class="leo-col-10 sortable" ng-click="orderByField='firstName'; reverseSort = !reverseSort">
+                              First Name
+                              <span class="table-bootgrid__icon zmdi mdi mdi-chevron-up" ng-if="reverseSort && orderByField=='firstName'"></span>
+                              <span class="table-bootgrid__icon zmdi mdi mdi-chevron-down" ng-if="!reverseSort  && orderByField=='firstName'"></span>
+                            </th>
+                            <th class="leo-col-10 sortable" ng-click="orderByField='lastName'; reverseSort = !reverseSort">
+                              Last Name
+                              <span class="table-bootgrid__icon zmdi mdi mdi-chevron-up" ng-if="reverseSort && orderByField=='lastName'"></span>
+                              <span class="table-bootgrid__icon zmdi mdi mdi-chevron-down" ng-if="!reverseSort  && orderByField=='lastName'"></span>
+
+                            </th>
+                            <th class="leo-col-14 sortable" ng-click="orderByField='occupation'; reverseSort = !reverseSort">
+                              Headline
+                              <span class="table-bootgrid__icon zmdi mdi mdi-chevron-up" ng-if="reverseSort && orderByField=='occupation'"></span>
+                              <span class="table-bootgrid__icon zmdi mdi mdi-chevron-down" ng-if="!reverseSort  && orderByField=='occupation'"></span>
+                            </th>
+                            <th class="leo-col-5 sortable" ng-click="orderByField='tags'; reverseSort = !reverseSort">
+                                Tags
+                                <span class="table-bootgrid__icon zmdi mdi mdi-chevron-up" ng-if="reverseSort && orderByField=='tags'"></span>
+                                <span class="table-bootgrid__icon zmdi mdi mdi-chevron-down" ng-if="!reverseSort  && orderByField=='tags'"></span>
+                            </th>
+                            <th class="leo-col-7 sortable" ng-click="orderByField='alias'; reverseSort = !reverseSort">
+                              Alias
+                              <span class="table-bootgrid__icon zmdi mdi mdi-chevron-up" ng-if="reverseSort && orderByField=='alias'"></span>
+                              <span class="table-bootgrid__icon zmdi mdi mdi-chevron-down" ng-if="!reverseSort  && orderByField=='alias'"></span>
+                            </th>
+                            <th class="leo-col-10 sortable" ng-click="orderByField='notes'; reverseSort = !reverseSort">
+                              Notes
+                              <span class="table-bootgrid__icon zmdi mdi mdi-chevron-up" ng-if="reverseSort && orderByField=='notes'"></span>
+                              <span class="table-bootgrid__icon zmdi mdi mdi-chevron-down" ng-if="!reverseSort  && orderByField=='notes'"></span>
+                            </th>
+                            <th class="leo-col-5 sortable" ng-click="orderByField='skipped'; reverseSort = !reverseSort">
+                                Skip
+                                <span class="table-bootgrid__icon zmdi mdi mdi-chevron-up" ng-if="reverseSort && orderByField=='skipped'"></span>
+                                <span class="table-bootgrid__icon zmdi mdi mdi-chevron-down" ng-if="!reverseSort  && orderByField=='skipped'"></span>
+                            </th>
+                            <th class="leo-col-2"></th>
+                            <th class="leo-col-2"></th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="leo-table-row" ng-if="filteredConnections.length == 0">
+                            <td colspan="10">No results found!</td>
+                        </tr>
+                        <tr dir-paginate="conn in (filteredConnections = (connections |  orderBy:orderByField:reverseSort | itemsPerPage: pageSize))" current-page="currentPage" class="leo-table-row"  ng-class="{highlitedRow: isRowSelected(conn.publicIdentifier)}">
+                            <td class="leo-col-2 checkbox">
+                                <label>
+                                    <input type="checkbox" ng-click="selectRow($index, conn.publicIdentifier, conn)" ng-checked="isRowSelected(conn.publicIdentifier)"/>
+                                    <i class="input-helper"></i>
+                                </label>
+                            </td>
+                            <td class="leo-col-2" style="padding:10px 0px;">
+                                <a href="https://www.linkedin.com/in/{{conn.publicIdentifier}}/"  target='_blank'>
+                                    <img ng-src="{{conn.pict}}" class='profile_pic_new' width='40' height='40' />
+                                </a>
+                            </td>
+                            <td class="leo-col-10 text-overflow">{{conn.firstName}}</td>
+                            <td class="leo-col-10 text-overflow">{{conn.lastName}}</td>
+                            <td class="leo-col-14 text-overflow">{{conn.occupation}}</td>
+                             <td class="leo-col-5" style="overflow:hidden;">
+                                <button  ng-if="conn.tags" class="btn leo-btn leo-btn-default edit-tag" type="button" data-row-id="{{conn.publicIdentifier}}" ng-click="editTag(conn.publicIdentifier)"> 
+                                    <i class="mdi mdi-pencil"></i> 
+                                    <span class="tags-label">{{conn.tags}}</span>
+                                </button>
+                                <button ng-if="!conn.tags" class="btn leo-btn leo-btn-default edit-tag" type="button" data-row-id="{{conn.publicIdentifier}}" ng-click="editTag(conn.publicIdentifier)"> 
+                                    <i class="mdi mdi-pencil"></i>
+                                    <span> ADD </span>
+                                </button>
+
+                            </td>
+                            <td class="leo-col-7" style="overflow:hidden;">
+                                <button  ng-if="conn.alias != '-' && !conn.aliasUnderEdit" class="btn leo-btn leo-btn-default edit-tag" type="button" value="{{conn.alias}}" ng-click="setAliasEditable($event, conn)"> 
+                                    <i class="mdi mdi-pencil"></i> 
+                                    <span class="tags-label">{{conn.alias}}</span>
+                                </button>
+                                <button  ng-if="conn.alias == '-' && !conn.aliasUnderEdit" class="btn leo-btn leo-btn-default edit-tag" type="button" value="" ng-click="setAliasEditable($event, conn)"> 
+                                    <i class="mdi mdi-pencil"></i> 
+                                    <span class="tags-label">Add</span>
+                                </button>
+                                <input class="alias-edit-{{conn.publicIdentifier}}" type="text" value="{{conn.alias}}" ng-keyup="setAlias($event, conn)" ng-if="conn.aliasUnderEdit" autofocus/>
+                            </td>
+                            <td class="leo-col-10 text-overflow" style="overflow:hidden;" title="{{conn.notes}}">{{conn.notes}}</td>
+                            <td class="leo-col-5 checkbox">
+                                <label>
+                                     <input type="checkbox" class="js-switch js-auto-change" id="skip-profile" data-setting-type="skip-profile" ng-model="conn.skipped" ng-true-value="'Yes'" ng-false-value="'No'" ng-change="skipProfile(conn.publicIdentifier, conn.skipped)"/>
+                                    <i class="input-helper"></i>
+                                </label>
+                            </td>
+                            <td class="leo-col-2">
+                                <a href="https://www.linkedin.com/in/{{conn.publicIdentifier}}/" target="_blank" class="leo-icons" title="Click to open {{conn.firstName}}'s profile">
+                                    <i class="zmdi zmdi-eye"></i>
+                                </a>
+                            </td>
+                            <td class="leo-col-2">
+                                <a class="message_icon leo-icons" data-row-id="{{conn.publicIdentifier}}" ng-click="sendMessage($index, conn.publicIdentifier, conn)">
+                                    <i class="zmdi zmdi-email"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                <div class="leo-table-options" ng-class="{ 'adjust-table-filter' : filteredConnections.length == 0}">
+                    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="./modules/pagination.tpl.html" max-size="7" auto-hide="false" ng-hide="filteredConnections.length == 0"></dir-pagination-controls>
+                    <div>
+                        <button class="btn leo-btn leo-btn-primary row-selected show-selected margin-right-20" ng-click="toggleSelectedView()" ng-disabled="selectedRows.length == 0 && !toggleSelected">
+                            <span ng-if="!toggleSelected">Show Selected</span>
+                            <span ng-if="toggleSelected">Show All</span>
+                        </button>
+                        <button class="btn leo-btn leo-btn-primary row-selected send-all-items margin-right-20" ng-click="setSendMessage()" ng-disabled="selectedRows.length == 0">Message</button>
+                        <button class="btn leo-btn leo-btn-primary row-selected add-tags-to-users" data-toggle="modal" href="#edit-multiple--tag" ng-disabled="selectedRows.length == 0">Add Tags to Selected</button>
+                    </div>
+                </div>
+                <div class="leo-table-info">
+                    {{setInfo()}}
+                </div> 
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="edit--tag" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Tags</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select id="tag_select" class="select2" multiple data-placeholder="Select tag" ng-model="tag" ng-options="o for o in tags track by o"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn leo-btn leo-btn-success" ng-if="!editMode" ng-click="saveTags();">SAVE</button>
+                <button class="btn leo-btn leo-btn-success btn--icon preloader-icon" ng-if="editMode"><i class="zmdi zmdi-refresh"></i></button>
+                <button type="button" class="btn leo-btn leo-btn-danger" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="edit-multiple--tag" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Tags to Selected Connections</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select id="tag_select_multiple" class="select2" multiple data-placeholder="Select tag" ng-model="tag" ng-options="o for o in tags track by o"></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn leo-btn leo-btn-success" ng-if="!editMode" ng-click="addTagsToSelected();">SAVE</button>
+                <button class="btn leo-btn leo-btn-success btn--icon preloader-icon" ng-if="editMode"><i class="zmdi zmdi-refresh"></i></button>
+                <button type="button" class="btn leo-btn leo-btn-danger" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal--default" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Send Message</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select id="message_template">
+                        <option ng-repeat="opt in message_templates" value="{{opt.id}}">{{opt.template_name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" ng-trim="false" ng-model="message" rows="8" maxlength="2000" placeholder="Enter template message" spellcheck="false"></textarea>
+                    <i class="form-group__bar"></i>
+                </div>
+                <div>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%firstName%');">%firstName%</button>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%lastName%');">%lastName%</button>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%position%');">%position%</button>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%company%');">%company%</button>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%industry%');">%industry%</button>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%city%');">%city%</button>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%state%');">%state%</button>
+                    <button class="btn btn-link btn-variables" ng-click="addToMessage('%country%');">%country%</button>
+                    <span class="align-right">{{message.length||0}}/2000</span>
+                </div>
+                <div class="add-tag-to-message">
+                    <span class="tag-title hidden">Tags</span>
+                    <div class="tag-container hidden">
+                        <select id="tag_select_message" class="select2" multiple data-placeholder="Select tag" ng-model="tag" ng-options="o for o in tags track by o"></select>
+                        <span class="remove-tag-option hidden">
+                            <i class="mdi mdi-delete"></i>
+                        </span>
+                    </div>  
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="attach-icon" ng-click="uploadFile()" ng-disabled="file_upload == 'file_upload'">
+                    <i class="material-icons">file_upload</i>
+                    <div ng-if="file_upload == 'file_upload'" class="preloader preloader--xs preloader--dark"><svg viewBox="25 25 50 50"><circle cx="50" cy="50" r="20"></circle></svg></div>
+                </span>
+                <button type="button" class="btn leo-btn leo-btn-primary add-tag-option" >ADD TAGS</button>
+                <button type="button" class="btn leo-btn leo-btn-success" ng-click="sendMessageToSelected();" ng-disabled="message==''" data-dismiss="modal">SEND</button>
+                <button type="button" class="btn leo-btn leo-btn-danger" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+.sortable { 
+    cursor: pointer;
+}
+.text-overflow{
+    white-space: pre;
+    word-break: unset;
+    word-wrap: unset;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.profile_pic_new {
+    border-radius: 50%;
+}
+.leo-icons {
+    cursor: pointer;
+    color: #283e4a !important;
+    font-size: 18px;
+}
+.critera-label {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #283e4a;
+    text-transform: capitalize;
+}
+.leo-select{
+    color: #000;
+    height: 35px;
+    /* display: block; */
+    border: 0px solid black;
+    border-bottom: 1px solid #31424b;
+    padding: 0px 0px 0px 5px;
+    text-align: center;
+    appearance: none;
+    appearance: none;
+    /* -webkit-appearance: none; */
+    background-image: none;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.leo-filterby-options {
+    position: absolute;
+    z-index: 2;
+    background: #FFF;
+    padding: 10px;
+    
+    margin-left: 65px;
+    border: 1px solid #ccc;
+    width: 300px;
+}
+.leo-filterby-options div {
+    color: #67757c;
+    font-weight: 300;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    padding: 10px;
+    font-weight: 400;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.leo-filterby-options div:hover{
+    background: rgba(0,0,0,0.1);
+}
+.leo-filter-tag-container {
+    /*display: flex;   */
+    flex-wrap: wrap;
+}
+.leo-filter-contain {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+    margin: 0px 10px 10px 60px;
+}
+.leo-filter-tag {
+    display: inline-flex;
+    padding: 2px 5px;
+    color: #67757c;
+    border: 1px solid #b1b8bb;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    margin: 5px;
+    letter-spacing: 1px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.leo-col-2 {
+    width:2%;
+    max-width: 40px !important;
+    min-width: 40px !important;
+}
+.leo-col-5 {
+    width:5%;
+    max-width: 70px !important;
+    min-width: 70px !important;
+}
+.leo-col-7 {
+    width:7%;
+    max-width: 80px !important;
+    min-width: 80px !important;
+}
+.leo-col-10 {
+    width: 10%;
+    max-width: 100px !important;
+    min-width: 80px !important;
+}
+.leo-col-14 {
+    width: 14%;
+    max-width: 280px !important;
+    min-width: 280px !important;
+}
+.leo-table-container {
+    background-color: #fff; 
+}
+.leo-table{
+    padding: 0px 20px;
+}
+.leo-table tbody{
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.20);
+}
+.leo-table-filters{
+    margin: auto;
+    width: 90%;
+    display: flex;
+}
+.leo-search-container {
+    border: 1px solid rgba(0,0,0,.15);
+    padding: 7px 12px;
+    border-radius: .25rem;
+    /*display: flex;*/
+    width: 90%;
+    float: left;
+    margin: 10px;
+    flex-direction: row;
+    align-items: center;
+    height: auto;
+    position: relative;
+    flex-wrap: wrap;
+}
+.leo-search-bar {
+    /*height: 35px;*/
+    /*padding: 10px 12px;*/
+    font-size: 15px;
+    /*width: 80%;*/
+    /*margin: 10px 0;*/
+    /*width: calc(100% - 120px);*/
+    flex-grow: 1;
+    /*width: 80%;*/
+    border: 0px solid black !important;
+}
+.leo-table-header th{
+    background-color: #283e4a;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #fff;
+    padding: 15px 10px;
+}
+.leo-table-row {
+    height: 65px;
+}
+.leo-table-row td{
+    color: #67757c;
+    font-weight: 300;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    padding: 10px;
+    font-weight: 400;
+    vertical-align: middle;
+}
+.leo-table-row:not(:first-child) {
+    border-top: 1px solid #ddd;
+}
+.leo-table-info {
+    color: #67757c;
+    font-weight: 300;
+    border: none;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    background: #fff;
+    padding-bottom: 10px;
+    text-align: right;
+}
+.leo-table-options{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.pagination li a {
+    z-index: 0;
+}
+.highlitedRow {
+    background: #f2f4f8;
+}
+.pagination>.active>a:focus {
+    background: #283e4a;
+    color: #fff;
+}
+.pagination>li.disabled{
+    opacity: 0.6;
+}
+.pagination>.disabled>a {
+    
+    font-size: 25px;
+    padding: 7px;
+}
+.adjust-table-filter {
+    justify-content: flex-end;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+</style>

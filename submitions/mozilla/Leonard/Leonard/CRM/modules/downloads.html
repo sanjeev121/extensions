@@ -1,0 +1,32 @@
+<div class="">
+    <div class="contacts row contacts_row">
+	    <div class="card__body">
+	        <div class="table-responsive">
+	            <table id="data-table" class="table">
+	                <thead>
+	                    <tr>
+	                    	<th data-column-id="Filename" data-header-css-class="col-sm-3">Filename</th>
+	                        <th data-column-id="Operation" data-header-css-class="col-sm-3">Operation</th>
+	                        <th data-column-id="count" data-header-css-class="col-sm-2">No. of profiles</th>
+	                        <th data-column-id="dateSaved" data-formatter="dateSaved" data-header-css-class="col-sm-2" >Performed</th>
+	                        <th data-column-id="id" data-formatter="renameFile"></th>
+	                        <th data-column-id="id" data-formatter="downloadData"></th>
+	                        <th data-column-id="id" data-formatter="deleteButton"></th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                    <tr ng-repeat="item in downloads">
+	                    	<td ng-bind="item.filename"></td>
+	                        <td ng-bind="item.operation"></td>
+	                        <td ng-bind="item.count"></td>
+	                        <td ng-bind="item.dateSaved"></td>
+	                        <td ng-bind="downloads.indexOf(item)">Rename</td>
+	                        <td ng-bind="downloads.indexOf(item)">Download</td>
+	                        <td ng-bind="downloads.indexOf(item)">Delete</td>
+	                    </tr>
+	                </tbody>
+	            </table>
+	        </div>
+	    </div>
+	</div>
+</div>

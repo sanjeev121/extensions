@@ -1,0 +1,395 @@
+<div>
+    <link rel="stylesheet" type="text/css" href="{{EXT_FOLDER}}css/frame.css" />
+    <div class="leonard_icon">
+        <span class="icon_style"><i><img src="{{EXT_FOLDER}}images/logo.png" width="40" /></i></span>
+    </div>
+    <div id="leonard_operations" class="hidden">
+        <span class="plan_version">{{PLAN}} - {{VERSION}}</span>
+        <div id="leonard_mod_content"></div>
+        <ul>
+            <li data-tab="visit_profiles">Visit</li>
+            <li data-tab="connection_invitation">Connect</li>
+            <li data-tab="post" disabled>Post</li>
+            <li data-tab="message">Message</li>
+            <li data-tab="inmail">InMail</li>
+            <li data-tab="Campaign" disabled>Campaign</li>
+            <li data-tab="go_to_crm">CRM</li>
+        </ul>
+    </div>
+    
+    <div id="connection_invitation_content" hidden>
+        <div class="row">
+            <label class="font-bold">How many profiles?</label>
+            <div class="range_slider_div">
+                <input type="range" min="1" max="{{REMAINING_CONNECTION_REQUESTS}}" step="1" value="{{REMAINING_CONNECTION_REQUESTS}}" id="conn_range_slider_temp" />
+            </div>
+            <input class="number" type="number" min="1" max="{{REMAINING_CONNECTION_REQUESTS}}" id="remaining_conn_req_temp" value="{{REMAINING_CONNECTION_REQUESTS}}" />
+        </div>
+        <div class="row">
+            <!-- <div id="inv_div_temp">
+                <label>Choose Connection Invitation Message</label>
+                <select class="template_selection">
+                    <option value="saved">Use from saved templates</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div> -->
+            <div class="template_selection_res">
+                <label>Choose Connection Invitation Message</label>
+                <select id="selInvMes_temp" class="template_selector" data-template-type="selectedInvitationMessage">
+                    <option>Select invitation message</option>
+                </select>
+                <div class="custom_message">
+                    <div>
+                        <textarea class="form-control" rows="6" maxlength="300" placeholder="Enter connection invitation message" id="custom_inv_msg_temp" spellcheck="false"></textarea>
+                    </div>
+                    <div>
+                        <button class="btn btn-link btn-variables" data-variable="%firstName%">%firstName%</button>
+                        <button class="btn btn-link btn-variables" data-variable="%lastName%">%lastName%</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- <div id="fol_div_temp">
+                <label>Choose New Connection Welcome Message</label>
+                <select class="template_selection">
+                    <option value="saved">Use from saved templates</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div> -->
+            <div class="template_selection_res">
+                <label>Choose New Connection Welcome Message</label>
+                <select id="selFollUpMes_temp" class="template_selector" data-template-type="selectedFollowUpMessage">
+                    <option>Select follow up message</option>
+                </select>
+                <div class="custom_message">
+                    <div>
+                        <textarea class="form-control" rows="6" maxlength="2000" placeholder="Enter follow up message" id="custom_fol_msg_temp" spellcheck="false"></textarea>
+                    </div>
+                    <div>
+                        <button class="btn btn-link btn-variables" data-variable="%firstName%">%firstName%</button>
+                        <button class="btn btn-link btn-variables" data-variable="%lastName%">%lastName%</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row" style="margin-bottom:10px">
+            <div class="template_selection_res">
+                <label style="float: left;">Welcome Message Auto Follow Up Delay </label>
+                <!-- <span class="info_icon" title="Time Leonard waits to send a follow up message to accepted connection."></span> -->
+                <div style="display: block;">
+                    <div style="display: block;" class="leo_left_float">
+                        <div class="squaredThree">
+                            <input type="radio" name="autoFollowUp_temp" value="false" id="value_off"><label for="value_off">Off</label>
+                        </div>
+                        <div class="squaredThree">
+                            <input type="radio" name="autoFollowUp_temp" value="1" id="value_1"><label for="value_1">1 hr</label>
+                        </div>
+                        <div class="squaredThree">
+                            <input type="radio" name="autoFollowUp_temp" value="12" id="value_12"><label for="value_12">12 hrs</label>
+                        </div>
+                        <div class="squaredThree">
+                            <input type="radio" name="autoFollowUp_temp" value="24" id="value_24"><label for="value_24">1 day</label>
+                        </div>
+                        <div class="squaredThree">
+                            <input type="radio" name="autoFollowUp_temp" value="48" id="value_48"><label for="value_48">2 days</label>
+                        </div>
+                        <div class="squaredThree">
+                            <input type="radio" name="autoFollowUp_temp" value="72" id="value_72"><label for="value_72">3 days</label>
+                        </div>
+                        <div class="squaredThree">
+                            <input type="radio" name="autoFollowUp_temp" value="168" id="value_168"><label for="value_168">7 days</label>
+                        </div>
+                    </div>
+                    <!-- <select id="autoFollowUp_temp" class="template_selector" data-template-type="autoFollowUp">
+                        <option value="" selected>Don't send follow up messages automatically</option>
+                        <option value="1">1 hour</option>
+                        <option value="12">12 hours</option>
+                        <option value="24">24 hours</option>
+                        <option value="48">48 hours</option>
+                        <option value="72">72 hours</option>
+                        <option value="168">7 days</option>
+                    </select> -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="row" style="margin-bottom:10px;">
+            <div class="leo_part">
+                <div style="width:90% !important;">
+                    <label class="leo_add_tags">Add Tags</label>
+                    <select id="conn_inv_tags_temp" class="select2" multiple data-placeholder="Select tag" ></select>
+                </div>
+            </div>
+            <div class="leo_part" style="margin-top:20px;">
+                <div class="tag_sales" hidden>
+                    <div class="squaredThree">
+                        <input type="checkbox" id="connect_tag_in_sales_nav" />
+                        <label for="connect_tag_in_sales_nav"></label>
+                    </div>
+                    <label class="title-left" for="connect_tag_in_sales_nav">Add Tags in Sales Navigator</label>
+                    <span class="info_icon" title="Check this to tag user with LinkedIn tags"></span>
+                </div>
+                <div>
+                    <div class="squaredThree">
+                        <input type="checkbox" id="connect_premium_only" />
+                        <label for="connect_premium_only"></label>
+                    </div>
+                    <label class="title-left" for="connect_premium_only">Connect to premium profiles only</label>
+                </div>
+                <div>
+                    <div class="squaredThree">
+                        <input type="checkbox" id="export_campaign_conn_temp" />
+                        <label for="export_campaign_conn_temp"></label>
+                    </div>
+                    <label class="title-left" for="export_campaign_conn_temp">Download to CSV</label>
+                </div>
+            </div>
+        </div>
+        <!--div class="row">
+            <div class="template_selection_res">
+                <label style="float: left;">Auto Responder</label>
+                <div style="margin-left:;display: block;" class="leo_left_float">
+                    <div class="squaredThree">
+                        <input type="radio" name="auto_respond" value="" id="value_none" checked><label for="value_none">None</label>
+                    </div>
+                    <div class="squaredThree">
+                        <input type="radio" name="auto_respond" value="1" id="value_1"><label for="value_1">24 hrs</label>
+                    </div>
+                    <div class="squaredThree">
+                        <input type="radio" name="auto_respond" value="2" id="value_2"><label for="value_2">48 hrs</label>
+                    </div>
+                    <div class="squaredThree">
+                        <input type="radio" name="auto_respond" value="7" id="value_7"><label for="value_7">7 days</label>
+                    </div>
+                </div>
+            </div>
+        </div-->
+        <div>
+            <button class="btn btn-default btn-leo-start" id="start_sending_conn_temp">Send</button>
+        </div>
+    </div>
+
+    <div id="message_content" hidden>
+        <div class="row">
+            <label class="font-bold">How many messages?</label>
+            <div class="range_slider_div">
+                <input type="range" min="1" max="{{REMAINING_MESSAGES}}" step="1" value="{{REMAINING_MESSAGES}}" id="msg_range_slider_temp" />
+            </div>
+            <input class="number" type="number" min="1" max="{{REMAINING_MESSAGES}}" id="remaining_msg_req_temp" value="{{REMAINING_MESSAGES}}" />
+        </div>
+        <div class="row">
+            <!-- <div id="msg_div_temp">
+                <label>Message</label>
+                <select class="template_selection">
+                    <option value="saved">Use from saved templates</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div> -->
+            <div class="template_selection_res">
+                <label>Message</label>
+                <select id="selMes_temp" class="template_selector" data-template-type="selectedMessage">
+                    <option>Select message</option>
+                </select>
+                <div class="custom_message">
+                    <div>
+                        <textarea class="form-control" rows="6" maxlength="2000" placeholder="Enter custom message" id="custom_msg_temp" spellcheck="false"></textarea>
+                    </div>
+                    <div>
+                        <button class="btn btn-link btn-variables" data-variable="%firstName%">%firstName%</button>
+                        <button class="btn btn-link btn-variables" data-variable="%lastName%">%lastName%</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:10px;">
+            <div class="leo_part">
+                <div style="width:90% !important;">
+                    <label class="leo_add_tags">Add Tags</label>
+                    <select id="message_tags_temp" class="select2" multiple data-placeholder="Select tag" ></select>
+                </div>
+            </div>
+            <div class="leo_part" style="margin-top:20px;">
+                <div class="tag_sales" hidden>
+                    <div class="squaredThree">
+                        <input type="checkbox" id="message_tag_in_sales_nav" />
+                        <label for="message_tag_in_sales_nav"></label>
+                    </div>
+                    <label class="title-left" for="message_tag_in_sales_nav">Add Tags in Sales Navigator</label>
+                    <span class="info_icon" title="Check this to tag user with LinkedIn tags"></span>
+                </div>
+                <div>
+                    <div class="squaredThree">
+                        <input type="checkbox" id="message_premium_only" />
+                        <label for="message_premium_only"></label>
+                    </div>
+                    <label class="title-left" style="width:100%;text-align:right;" for="message_premium_only">Send message to premium profiles only</label>
+                </div>
+                <div>
+                    <div class="squaredThree">
+                        <input type="checkbox" id="export_campaign_msg_temp" />
+                        <label for="export_campaign_msg_temp"></label>
+                    </div>
+                    <label class="title-left" for="export_campaign_msg_temp">Download to CSV</label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <span class="leo-notice">Notice: Please select 1st connections only!</span>
+        </div>
+        <div class="file_list">
+            <div class="file_list_ul"></div>
+        </div>
+        <div>
+            <button class="btn btn-default btn-leo-upload hidden" data-mod-type="selectedMessageAttachments" id="start_att_msg_temp">
+                <span class="btn_text">Add attachments</span>
+                <div class="loader hidden" title="0"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve"><path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/><path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0C22.32,8.481,24.301,9.057,26.013,10.047z"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"/></path></svg></div>
+            </button>
+            <button class="btn btn-default btn-leo-start" id="start_sending_msg_temp">Send</button>
+        </div>
+    </div>
+
+    <div id="inmail_content" hidden>
+        <div class="row">
+            <label class="font-bold">How many messages?</label>
+            <div class="range_slider_div">
+                <input type="range" min="1" max="{{REMAINING_INMAILS}}" step="1" value="{{REMAINING_INMAILS}}" id="inm_range_slider_temp" />
+            </div>
+            <input class="number" type="number" min="1" max="{{REMAINING_INMAILS}}" id="remaining_inm_req_temp" value="{{REMAINING_INMAILS}}" />
+        </div>
+        <div class="row">
+            <!-- <div id="inm_div_temp">
+                <label>InMail</label>
+                <select class="template_selection">
+                    <option value="saved">Use from saved templates</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div> -->
+            <div class="template_selection_res">
+                <label>InMail</label>
+                <select id="selInm_temp" class="template_selector"  data-template-type="selectedInMail">
+                    <option>Select InMail</option>
+                </select>
+                <div class="custom_message">
+                    <div>
+                        <input class="form-control" placeholder="Enter subject" id="custom_inm_subject_temp" spellcheck="false" />
+                    </div>
+                    <div style="margin:5px 0 10px;">
+                        <button class="btn btn-link btn-variables" data-variable="%firstName%">%firstName%</button>
+                        <button class="btn btn-link btn-variables" data-variable="%lastName%">%lastName%</button>
+                    </div>
+                    <div>
+                        <textarea class="form-control" rows="6" maxlength="2000" placeholder="Enter custom message" id="custom_inm_temp" spellcheck="false"></textarea>
+                    </div>
+                    <div>
+                        <button class="btn btn-link btn-variables" data-variable="%firstName%">%firstName%</button>
+                        <button class="btn btn-link btn-variables" data-variable="%lastName%">%lastName%</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="leo_part">
+                <div style="width:90% !important;">
+                    <label class="leo_add_tags">Add Tags</label>
+                    <select id="inmails_tags_temp" class="select2" multiple data-placeholder="Select tag" ></select>
+                </div>
+            </div>
+            <div class="leo_part" style="margin-top:20px;">
+                <div class="tag_sales" hidden>
+                    <div class="squaredThree">
+                        <input type="checkbox" id="inmail_tag_in_sales_nav" />
+                        <label for="inmail_tag_in_sales_nav"></label>
+                    </div>
+                    <label class="title-left" for="inmail_tag_in_sales_nav">Add Tags in Sales Navigator</label>
+                    <span class="info_icon" title="Check this to tag user with LinkedIn tags"></span>
+                </div>
+                <div>
+                    <!-- <input type="checkbox" id="send_using_credits" /> -->
+                    <div class="squaredThree">
+                        <input type="checkbox" id="send_using_credits" />
+                        <label for="send_using_credits"></label>
+                    </div>
+                    <label class="title-left" for="send_using_credits">Send InMail using credits</label>
+                </div>
+                <div>
+                    <div class="squaredThree">
+                        <input type="checkbox" id="inmail_premium_only" />
+                        <label for="inmail_premium_only"></label>
+                    </div>
+                    <label class="title-left" for="inmail_premium_only">Send InMail to premium profiles only</label>
+                </div>
+                <div>
+                    <div class="squaredThree">
+                        <input type="checkbox" id="export_campaign_mail_temp" />
+                        <label for="export_campaign_mail_temp"></label>
+                    </div>
+                    <label class="title-left" for="export_campaign_mail_temp">Download to CSV</label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <span class="leo-notice">Notice: Please select 1st connections only!</span>
+        </div>
+        <div class="file_list">
+            <div class="file_list_ul"></div>
+        </div>
+        <div>
+            <button class="btn btn-default btn-leo-upload hidden" data-mod-type="selectedInMailAttachments" id="start_att_inm_temp">
+                <span class="btn_text">Add attachments</span>
+                <div class="loader hidden"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve"><path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/><path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0C22.32,8.481,24.301,9.057,26.013,10.047z"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"/></path></svg></div>
+            </button>
+            <button class="btn btn-default btn-leo-start" id="start_sending_inm_temp">Send</button>
+        </div>
+    </div>
+
+    <div id="visit_profiles_content" hidden>
+        <div class="row">
+            <label class="font-bold">How many profiles?</label>
+            <div class="range_slider_div">
+                <input type="range" min="1" max="{{REMAINING_PROFILE_VIEWS}}" step="1" value="{{REMAINING_PROFILE_VIEWS}}" id="range_slider_temp" />
+            </div>
+            <input class="number" type="number" min="1" max="{{REMAINING_PROFILE_VIEWS}}" id="remaining_temp" value="{{REMAINING_PROFILE_VIEWS}}" />
+        </div>
+        <div class="row" style="margin-bottom:10px;">
+            <div class="leo_part">
+                <div style="width:90% !important;">
+                    <label class="leo_add_tags">Add Tags</label>
+                    <select id="view_tags_temp" class="select2" multiple data-placeholder="Select tag" ></select>
+                </div>
+            </div>
+            <div class="leo_part" style="margin-top:20px;">
+                <div class="tag_sales" hidden>
+                    <div class="squaredThree">
+                        <input type="checkbox" id="view_tag_in_sales_nav" />
+                        <label for="view_tag_in_sales_nav"></label>
+                    </div>
+                    <label class="title-left" for="view_tag_in_sales_nav">Add Tags in Sales Navigator</label>
+                    <span class="info_icon" title="Check this to tag user with LinkedIn tags"></span>
+                </div>
+                <div>
+                    <!-- <input type="checkbox" id="view_premium_only" /> -->
+                    <div class="squaredThree">
+                        <input type="checkbox" id="view_premium_only" />
+                        <label for="view_premium_only"></label>
+                    </div>
+                    <label class="title-left" for="view_premium_only">View Premium profiles only</label>
+                </div>
+                <div>
+                    <div class="squaredThree">
+                        <input type="checkbox" id="export_campaign_visit_temp" />
+                        <label for="export_campaign_visit_temp"></label>
+                    </div>
+                    <label class="title-left" for="export_campaign_visit_temp">Download to CSV</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button class="btn btn-default btn-leo-start" id="start_viewing_temp">Start</button>
+        </div>
+    </div>
+
+    <script type="text/javascript" defer src="{{EXT_FOLDER}}CRM/vendors/jquery/jquery.min.js"></script>
+    <script type="text/javascript" defer src="{{EXT_FOLDER}}js/frame.js"></script>
+</div>

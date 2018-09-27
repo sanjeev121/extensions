@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="../css/popup.css" type="text/css" />
+		<script type="text/javascript" src="../CRM/vendors/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="../js/progressbar.min.js"></script>
+		<script type="text/javascript" src="../js/popup.js"></script>
+		<!--script type='text/javascript'>(function(){var gs=document.createElement('script');gs.src='https://snippet.growsumo.com/growsumo.min.js';gs.type='text/javascript';gs.async ='true';gs.onload=gs.onreadystatechange=function(){var rs=this.readyState;if(rs&&rs!='complete'&&rs!='loaded')return;try{growsumo._initialize('pk_RDzA1hS6p8JmX3LkvolHh3FPi2BS3bQ2');}catch(e){}};var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(gs,s);})();</script-->
+	</head>
+	<body>
+		<div id="preloader">
+			<div></div>
+		</div>
+		<div id="login_popup">
+			<div id="outer_form">
+				<div>
+					<span>Please open <a class="new_tab top_links" data-href="https://www.linkedin.com/">LinkedIn</a> to use Leonard.</span>
+				</div>
+			</div>
+			<div id="get_details">
+				<div>
+					<span>I'm fetching your details from LinkedIn<br />Please wait...</span>
+				</div>
+			</div>
+			<div class="close_btn"><img src="../images/close.png" width="20" /></div>
+		</div>
+		<div id="det_popup">
+			<!-- <div class="top_right_opts">
+				<span id="top_plan"></span>
+				<span> - </span>
+				<span id="top_version"></span>
+			</div> -->
+			<!-- <br /> -->
+			<div id="top_bar_opts">
+				<div style="float:right;">
+					<span id="top_plan"></span>
+					<span> - </span>
+					<!-- <span id="top_leonard_id"></span>
+					<span> | </span> -->
+					<span id="top_version"></span>
+				</div>
+				<br />
+				<div>
+					<span class="new_tab top_links" data-link="account">My Details</span>
+					<span class="seperator">|</span>
+					<!-- <span class="new_tab top_links" data-href="mailto:support@meetleonard.com">Support</span> -->
+					<span class="new_tab top_links" data-href="http://help.meetleonard.com">Help</span>
+					<span class="seperator">|</span>
+					<span class="new_tab top_links" data-href="http://tutorials.meetleonard.com">Tutorials</span>
+					<!-- <span class="seperator">|</span> -->
+				</div>
+				<!-- <span class="seperator">|</span>
+				<span id="top_version"></span> -->
+			</div>
+			<br />
+			<br />
+			<div id="logo_title">
+				<img src="../images/logo.png" width="40">
+				<span id="greet_user"></span>
+				<span style="display:block;width:300px;">What can I do for you today?</span>
+			</div>
+			<span class="error_msg"></span>
+			<div id="controls">
+				<div class="sales_controls">
+					<div>
+						<span class="buttons" id="sales_visit" data-control-type="sales">VISIT</span>
+						<span class="button_desc">Auto visit profiles from search results</span>
+					</div>
+					<div>
+						<span class="buttons" id="sales_connect" data-control-type="sales">CONNECT</span>
+						<span class="button_desc">Send bulk connection requests</span>
+					</div>
+					<!-- <div>
+						<span class="buttons pending" id="sales_post" data-control-type="sales">POST</span>
+						<span class="button_desc no_line_height">Feature Under Development.<br />Coming Soon!</span>
+					</div> -->
+					<div>
+						<span class="buttons" id="sales_message" data-control-type="sales" data-plan-check="true">MESSAGE</span>
+						<span class="button_desc no_line_height">Send bulk messages to<br />1st connections</span>
+					</div>
+					<div>
+						<span class="buttons" id="sales_inmail" data-control-type="sales" data-plan-check="true">INMAIL</span>
+						<span class="button_desc">Send bulk FREE InMails</span>
+					</div>
+					<!-- <div>
+						<span class="buttons pending" id="sales_campaign" data-control-type="sales">CAMPAIGN</span>
+						<span class="button_desc no_line_height">Feature Under Development.<br />Coming Soon!</span>
+					</div> -->
+					<!-- <div>
+						<span class="buttons pending" id="sales_export" data-control-type="sales">EXPORT</span>
+						<span class="button_desc">Download contacts in CSV file</span>
+					</div> -->
+				</div>
+				<div class="global_controls">
+					<div>
+						<span class="buttons" id="global_visit" data-control-type="global">VISIT</span>
+						<span class="button_desc">Auto visit profiles from search results</span>
+					</div>
+					<div>
+						<span class="buttons" id="global_connect" data-control-type="global">CONNECT</span>
+						<span class="button_desc">Send bulk connection requests</span>
+					</div>
+					<!-- <div>
+						<span class="buttons pending" id="global_post" data-control-type="global">POST</span>
+						<span class="button_desc no_line_height">Feature Under Development.<br />Coming Soon!</span>
+					</div> -->
+					<div>
+						<span class="buttons" id="global_messages" data-control-type="global" data-plan-check="true">MESSAGE</span>
+						<span class="button_desc no_line_height">Send bulk messages to<br />1st connections</span>
+					</div>
+					<div>
+						<span class="buttons pending only_sales" id="global_inmail" data-control-type="global" data-plan-check="true">INMAIL</span>
+						<span class="button_desc">Send bulk FREE InMails</span>
+					</div>
+					<!-- <div>
+						<span class="buttons pending" id="global_campaign" data-control-type="global">CAMPAIGN</span>
+						<span class="button_desc no_line_height">Feature Under Development.<br />Coming Soon!</span>
+					</div> -->
+					<!-- <div>
+						<span class="buttons pending" id="global_export" data-control-type="global">EXPORT</span>
+						<span class="button_desc">Download contacts in CSV file</span>
+					</div> -->
+				</div>
+				<div>
+					<span class="buttons" id="open_crm">CRM</span>
+					<span class="button_desc">Open Leonard CRM</span>
+				</div>
+				<div>
+					<span class="buttons upgrade_btn">Upgrade</span>
+					<span class="button_desc">Check other plans</span>
+				</div>
+			</div>
+		</div>
+		<div id="signup_popup">
+			<div>
+				<img src="../images/logo.png" width="80" style="margin-bottom: 40px;" />
+				<span style="display: block;font-size: 24px;margin-bottom: 60px;">Welcome to Leonard</span>
+			</div>
+			<span class="linkedin_btn" disabled></span><br/>
+			<span><input type="checkbox" id="agreed" /> <label for="agreed">I agree to <span class="new_tab top_links" data-href="https://meetleonard.com/terms/">Terms of Service.</span></label></span>
+		</div>
+	</body>
+</html>

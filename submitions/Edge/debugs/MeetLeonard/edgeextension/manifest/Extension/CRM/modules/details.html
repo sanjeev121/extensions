@@ -1,0 +1,153 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 toppad">
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" ng-src="{{user_profile.profile_img}}" class="img-circle img-responsive" /> </div>
+
+                        <!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
+                  <dl>
+                    <dt>DEPARTMENT:</dt>
+                    <dd>Administrator</dd>
+                    <dt>HIRE DATE</dt>
+                    <dd>11/12/2013</dd>
+                    <dt>DATE OF BIRTH</dt>
+                       <dd>11/12/2013</dd>
+                    <dt>GENDER</dt>
+                    <dd>Male</dd>
+                  </dl>
+                </div>-->
+                        <div class=" col-md-9 col-lg-9 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td>Name:</td>
+                                        <td>{{user_profile.firstName}} {{user_profile.lastName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email:</td>
+                                        <td><a href="mailto:{{user_profile.email}}">{{user_profile.email}}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Registered:</td>
+                                        <td>{{user_profile.registered | date:'medium'}}</td>
+                                    </tr>
+                                    <tr>
+										<td>Your profile:</label>
+										<td><a href="{{user_profile.profile}}" target="_blank">{{user_profile.profile}}</a></td>
+									</tr>
+									<tr>
+										<td>LI Membership:</td>
+										<td>{{user_profile.membership}}</td>
+									</tr>
+									<tr>
+										<td>Industry:</td>
+										<td>{{user_profile.industry}}</td>
+									</tr>
+									<tr>
+										<td>Location:</td>
+										<td>{{user_profile.location}}</td>
+									</tr>
+									<tr>
+										<td>Country:</td>
+										<td>{{user_profile.location.split(',').splice(-1)[0].trim()}}</td>
+									</tr>
+									<tr>
+										<td>Leonard ID:</td>
+										<td>{{user_profile.ID}}</td>
+									</tr>
+									<tr>
+										<td>Leonard Membership:</td>
+										<td>{{user_profile.user_type}}</td>
+									</tr>
+									<tr>
+										<td>Leonard Plan:</td>
+										<td>{{user_profile.user_plan}}</td>
+									</tr>
+									<tr ng-hide="!user_profile.renewal_date">
+										<td>Renewal Date:</td>
+										<td>{{user_profile.renewal_date | date:'medium'}}</td>
+									</tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="panel-footer">
+                    <a type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+                    <span class="pull-right">
+                            <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                        </span>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+<div class="container">
+	<div>
+		<label>First Name</label>
+		<span>:</span>
+		<label>{{user_profile.firstName}}</label>
+	</div>
+	<div>
+		<label>Last Name</label>
+		<span>:</span>
+		<label>{{user_profile.lastName}}</label>
+	</div>
+	<div>
+		<label>Email</label>
+		<span>:</span>
+		<label>{{user_profile.email}}</label>
+	</div>
+	<div>
+		<label>Registered</label>
+		<span>:</span>
+		<label>{{user_profile.registered}}</label>
+	</div>
+	<div>
+		<label>Your profile</label>
+		<span>:</span>
+		<label><a href="{{user_profile.profile}}" target="_blank">{{user_profile.profile}}</a></label>
+	</div>
+	<div>
+		<label>LI Membership</label>
+		<span>:</span>
+		<label>{{user_profile.membership}}</label>
+	</div>
+	<div>
+		<label>Industry</label>
+		<span>:</span>
+		<label>{{user_profile.industry}}</label>
+	</div>
+	<div>
+		<label>Location</label>
+		<span>:</span>
+		<label>{{user_profile.location}}</label>
+	</div>
+	<div>
+		<label>Country</label>
+		<span>:</span>
+		<label>{{country}}</label>
+	</div>
+	<div>
+		<label>Leonard ID</label>
+		<span>:</span>
+		<label>{{user_profile.ID}}</label>
+	</div>
+	<div>
+		<label>Leonard Membership</label>
+		<span>:</span>
+		<label>{{user_profile.user_plan}}</label>
+	</div>
+	<div>
+		<label>Renewal Date</label>
+		<span>:</span>
+		<label>{{user_profile.renewal_date}}</label>
+	</div>
+</div>
+-->

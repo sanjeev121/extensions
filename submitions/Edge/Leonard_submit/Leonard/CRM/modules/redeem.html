@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 toppad">
+            <div class="panel panel-info">
+                <div class="panel-body">
+                        <div class="leo-redeem-container">
+                        	<span class="leo-redeem-text">Enter your coupon code to upgrade</span>
+							<form class="leo-redeem-input-contianer" ng-submit="redeemCoupon()">
+								<input ng-model="coupon" type="text" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX" pattern="[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}" required />
+								<button type="submit" class="btn leo-btn leo-btn-primary">Submit</button>
+							</form>
+                    	</div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+.leo-redeem-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 0px;
+}
+.leo-redeem-text {
+    color: #67757c;
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    margin: 20px 0px;
+}
+.leo-redeem-input-contianer {
+    display: flex;
+}
+.leo-redeem-input-contianer input {
+    font-size: 16px;
+    padding: 4px 12px;
+    height: 35px;
+    width: 400px;
+    margin-right: 10px;
+}
+</style>

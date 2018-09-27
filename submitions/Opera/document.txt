@@ -1,0 +1,11 @@
+This is the add-on metadata control panel. It allows you to:
+change the name of the add-on before it is published for the first time (  General )
+change the category the add-on is listed in (  General )
+upload new versions of the add-on (  Versions )
+navigate to specific add-on version's metadata (  Versions )
+communicate with the moderators (  Conversation )
+submit a promotional picture to the moderator (  Promotional Image )
+ delete add-on (  General )
+If you want to change the name of the add-on later on, please write to the moderators!
+
+
